@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/server.js",
   "scripts": {
-    "dev": "nodemon",
+    "dev": "cross-env NODE_ENV=development nodemon",
     "start": "node src/server.js"
   },
   "keywords": [],
@@ -14,7 +14,9 @@
     "apollo-server": "^3.4.0",
     "apollo-server-core": "^3.4.0",
     "apollo-server-express": "^3.4.0",
+    "cross-env": "^7.0.3",
     "csv": "^5.5.3",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "graphql": "^15.6.1",
     "mongoose": "^6.0.10",

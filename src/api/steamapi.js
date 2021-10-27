@@ -5,11 +5,7 @@ const NodeCache = require("node-cache");
 
 const SteamApiCache = new NodeCache({ stdTTL: 3600 * 24 });
 
-const {
-  Steam: { apiKey },
-} = require("../../secrets.json");
-
-const api = new SteamAPI(apiKey);
+const api = new SteamAPI(process.env.STEAM_API_KEY);
 
 const getProfileSummary = async (steamId) => {
   let steamIdInstance;

@@ -1,21 +1,19 @@
+require("dotenv").config();
 const { app } = require("./app.js");
 
 const apolloServer = require("./graphql.js");
 
-//require("./api/times/index.js");
-//require("./api/maps/index.js");
-//require("./api/user/index.js");
+if (process.env.NODE_ENV === "development") {
+  process.once("SIGUSR2", function () {
+    process.kill(process.pid, "SIGUSR2");
+  });
 
-process.once("SIGUSR2", function () {
-  process.kill(process.pid, "SIGUSR2");
-});
-
-process.on("SIGINT", function () {
-  // this is only called on ctrl+c, not restart
-  console.log("exiting via ctrl+c");
-  process.kill(process.pid, "SIGINT");
-});
-
+  process.on("SIGINT", function () {
+    // this is only called on ctrl+c, not restart
+    console.log("exiting via ctrl+c");
+    process.kill(process.pid, "SIGINT");
+  });
+}
 apolloServer.start().then(() => {
   apolloServer.applyMiddleware({ app });
 

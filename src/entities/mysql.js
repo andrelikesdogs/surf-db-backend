@@ -1,14 +1,11 @@
 const { Sequelize } = require("sequelize");
 
-const { MySQL } = require("../../secrets.json");
 const sequelize = new Sequelize({
-  database: MySQL.database,
-  username: MySQL.username,
-  password: MySQL.password,
-  port: MySQL.port,
+  database: process.env.DB_DATABASE,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT,
   dialect: "mysql",
 });
-
-//sequelize.sync();
 
 module.exports = sequelize;

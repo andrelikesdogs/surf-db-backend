@@ -13,8 +13,10 @@ const getUserTimes = async (steamId) => {
   console.log(steamId);
   let steamIdInstance;
   try {
-    if (steamId.trim().length == 0) throw new Error("bad steamid");
-    steamIdInstance = new SteamID(steamId);
+    const cleanedSteamId = decodeURIComponent(steamId.trim());
+
+    if (cleanedSteamId.length == 0) throw new Error("bad steamid");
+    steamIdInstance = new SteamID(cleanedSteamId);
   } catch (err) {
     throw new Error("Malformed SteamID");
   }
@@ -86,6 +88,8 @@ const getUserTimes = async (steamId) => {
     },
     order: [[sequelize.col("inf_times.recdate"), "DESC"]],
   });
+
+  console.log(completed.map((c) => c.toJSON()));
 
   return {
     completed: completed.map((c) => c.toJSON()),

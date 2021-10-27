@@ -1,0 +1,7 @@
+{
+  "execMap": {
+    "js": "./node_modules/.bin/babel-node --unhandled-rejections=strict"
+  },
+  "watch": ["src/"],
+  "ext": "js,json"
+}

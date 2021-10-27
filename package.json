@@ -1,0 +1,35 @@
+{
+  "name": "surf-db-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "nodemon"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^3.4.0",
+    "apollo-server-core": "^3.4.0",
+    "apollo-server-express": "^3.4.0",
+    "csv": "^5.5.3",
+    "express": "^4.17.1",
+    "graphql": "^15.6.1",
+    "mongoose": "^6.0.10",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.1",
+    "node-cache": "^5.1.2",
+    "nodemon": "^2.0.13",
+    "sequelize": "^6.7.0",
+    "steamapi": "^2.2.0",
+    "steamid": "^2.0.0",
+    "swagger-express-router": "^1.0.0",
+    "swagger-ui-express": "^4.1.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.8",
+    "@babel/node": "^7.15.8"
+  }
+}

@@ -9,15 +9,18 @@ const sequelize = require("../entities/mysql");
 const { Op } = require("sequelize");
 const { ApolloError } = require("apollo-server-errors");
 
-const getUserTimes = async (steamId) => {
+const formatSteamId = require("../utils/formatSteamId.js");
+
+const getUserTimes = async (input) => {
+  const steamId = formatSteamId(input);
   console.log(steamId);
   let steamIdInstance;
   try {
-    const cleanedSteamId = decodeURIComponent(steamId.trim());
-
-    if (cleanedSteamId.length == 0) throw new Error("bad steamid");
-    steamIdInstance = new SteamID(cleanedSteamId);
+    if (steamId.length == 0) throw new Error("bad steamid");
+    steamIdInstance = new SteamID(steamId);
+    console.log(steamIdInstance);
   } catch (err) {
+    console.error(err);
     throw new Error("Malformed SteamID");
   }
 
@@ -89,7 +92,7 @@ const getUserTimes = async (steamId) => {
     order: [[sequelize.col("inf_times.recdate"), "DESC"]],
   });
 
-  console.log(completed.map((c) => c.toJSON()));
+  // console.log(completed.map((c) => c.toJSON()));
 
   return {
     completed: completed.map((c) => c.toJSON()),

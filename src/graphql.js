@@ -4,7 +4,7 @@ const { ApolloServer } = require("apollo-server-express");
 const { getAllMaps, getInfluxMaps } = require("./api/maps");
 const { getUserTimes } = require("./api/user");
 const { getProfileSummary } = require("./api/steamapi");
-const { app, httpServer } = require("./app");
+const { httpServer } = require("./app");
 
 const typeDefs = gql`
   enum Category {
@@ -102,8 +102,8 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    maps: getAllMaps,
-    influxMaps: getInfluxMaps,
+    // maps: getAllMaps,
+    // influxMaps: getInfluxMaps,
     GetUserStats: (parent, args, context, info) => getUserTimes(args.steamId),
     GetUserSteamProfile: (parent, args, context, info) =>
       getProfileSummary(args.steamId),

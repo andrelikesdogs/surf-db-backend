@@ -48,7 +48,7 @@ const getUserTimes = async (input) => {
           sequelize.literal(
             "(SELECT rankcount\
               FROM (SELECT *, COUNT(*) as rankcount FROM `inf_times` GROUP BY `mapid`, `runid`, `mode`, `style`) AS `t2`\
-              WHERE `t2`.`uid`= `inf_times`.`uid` AND `t2`.`mapid`= `inf_times`.`mapid` AND  `t2`.`runid`= `inf_times`.`runid` AND  `t2`.`mode`= `inf_times`.`mode` AND  `t2`.`style`= `inf_times`.`style` \
+              WHERE `t2`.`mapid`= `inf_times`.`mapid` AND  `t2`.`runid`= `inf_times`.`runid` AND  `t2`.`mode`= `inf_times`.`mode` AND  `t2`.`style`= `inf_times`.`style` LIMIT 1 \
             )"
           ),
           "rankcount",

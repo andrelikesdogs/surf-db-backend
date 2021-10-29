@@ -8,7 +8,7 @@ const ServerQueryCache = new NodeCache({ stdTTL: 2 });
 const SERVERS = {
   1: {
     type: "css",
-    host: "202.61.201.45",
+    host: "host.docker.internal",
     port: "27015",
   },
 };

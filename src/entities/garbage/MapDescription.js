@@ -5,6 +5,7 @@ class MapDescription extends Model {}
 MapDescription.init(
   {
     id: { type: DataTypes.INTEGER, primaryKey: true },
+    category: { type: DataTypes.STRING },
     tier: { type: DataTypes.INTEGER },
     stageCount: { type: DataTypes.INTEGER },
     bonusStageCount: { type: DataTypes.INTEGER },

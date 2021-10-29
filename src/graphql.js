@@ -1,16 +1,19 @@
 const { gql } = require("apollo-server");
 const { ApolloServerPluginDrainHttpServer } = require("apollo-server-core");
 const { ApolloServer } = require("apollo-server-express");
-const { getAllMaps, getInfluxMaps } = require("./api/maps");
+
+const { httpServer } = require("./app");
+
+const { getMaps } = require("./api/maps");
 const { getUserTimes } = require("./api/user");
 const { getProfileSummary } = require("./api/steamapi");
-const { httpServer } = require("./app");
+const { getServerStatus } = require("./api/server");
 
 const typeDefs = gql`
   enum Category {
-    LINEAR
-    STAGES
-    COMBAT
+    Linear
+    Stages
+    Combat
   }
 
   type Time {
@@ -21,6 +24,7 @@ const typeDefs = gql`
     mode: Int
     style: Int
     rank: Int
+    rankcount: Int
     rectime: Float
     recdate: Date
     jumpnum: Int
@@ -39,7 +43,7 @@ const typeDefs = gql`
     tier: Int
     stages: Int
     bonusStages: Int
-    aestheticRatings: [Int]
+    ratings: [Int]
   }
 
   type MapVariant {
@@ -91,12 +95,30 @@ const typeDefs = gql`
     visibilityState: Int!
   }
 
+  enum ServerStatus {
+    ONLINE
+    OFFLINE
+  }
+
+  type Player {
+    name: String!
+    playTimeSeconds: Float!
+  }
+
+  type Server {
+    status: ServerStatus!
+    name: String
+    map: String
+    playerCount: Int
+    maxPlayerCount: Int
+    players: [Player]
+  }
+
   type Query {
-    map(id: ID!): Map
-    maps: [Map]
-    influxMaps: [Map]
+    GetMaps: [Description]
     GetUserStats(steamId: ID!): UserStats
     GetUserSteamProfile(steamId: ID!): SteamProfile
+    GetServerStatus(serverId: ID!): Server
   }
 `;
 
@@ -104,9 +126,12 @@ const resolvers = {
   Query: {
     // maps: getAllMaps,
     // influxMaps: getInfluxMaps,
+    GetMaps: (parent, args, context, info) => getMaps(),
     GetUserStats: (parent, args, context, info) => getUserTimes(args.steamId),
     GetUserSteamProfile: (parent, args, context, info) =>
       getProfileSummary(args.steamId),
+    GetServerStatus: (parent, args, context, info) =>
+      getServerStatus(args.serverId),
   },
 };
 
@@ -114,5 +139,8 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   plugins: [new ApolloServerPluginDrainHttpServer({ httpServer })],
+  context: ({ req }) => {
+    return { user: req.user };
+  },
 });
 module.exports = server;

@@ -9,7 +9,7 @@ MapTag.init(
       type: DataTypes.INTEGER,
       primaryKey: true,
     },
-    mapid: {
+    descriptionid: {
       type: DataTypes.INTEGER,
       references: {
         Model: MapDescription,
@@ -28,11 +28,11 @@ MapTag.init(
 
 MapDescription.hasMany(MapTag, {
   sourceKey: "id",
-  foreignKey: "mapid",
+  foreignKey: "descriptionid",
   as: "tags",
 });
 MapTag.belongsTo(MapDescription, {
-  sourceKey: "mapid",
+  sourceKey: "descriptionid",
   foreignKey: "id",
 });
 

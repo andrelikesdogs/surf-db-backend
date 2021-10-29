@@ -26,6 +26,7 @@ const getServerStatus = async (serverId) => {
       ...server,
       socketTimeout: 1000,
       attemptTimeout: 3000,
+      listenUdpPort: 27001,
     });
   } catch (err) {
     console.warn(err);
